@@ -129,7 +129,7 @@ for epoch in range(1, n_epochs):
     train_epoch_loss, train_epoch_accuracy = fit(epoch, model, train_data_loader, phase='training')
     val_epoch_loss, val_epoch_accuracy = fit(epoch, model, valid_data_loader, phase='validation')
     train_losses.append(train_epoch_loss)
-    train_accuracy.append(train_epoch_loss)
+    train_accuracy.append(train_epoch_accuracy)
     val_losses.append(val_epoch_loss)
     val_accuracy.append(val_epoch_accuracy)
     ### saving model if validation model is less than previous validation loss
@@ -146,8 +146,6 @@ writer.writerow(train_losses)
 writer.writerow(train_accuracy)
 writer.writerow(val_losses)
 writer.writerow(val_accuracy)
-
-
 
 plt.plot(range(1, len(train_losses)+1), train_losses, 'bo', label = 'training loss')
 plt.plot(range(1, len(val_losses)+1), val_losses, 'r', label = 'validation loss')
