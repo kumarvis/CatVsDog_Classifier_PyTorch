@@ -106,19 +106,19 @@ def fit(epoch, model, data_loader, phase='training', volatile=False):
         #updating running loss
         running_loss += loss.item() * data.size(0)
         preds = output.data.max(dim=1, keepdim=True)[1]
-        running_correct += preds.eq(labels.data.view_as(preds)).cpu().sum()
+        running_correct += preds.eq(labels.data.view_as(preds)).cpu().sum().item()
         if phase == 'training':
             loss.backward()
             optimizer.step()
 
-    loss = running_loss / len(train_data_loader.sampler.indices)
-    accuracy = 100. * running_correct / len(train_data_loader.sampler.indices)
+    loss = running_loss / len(data_loader.sampler.indices)
+    accuracy = 100. * running_correct / len(data_loader.sampler.indices)
 
     #print(f'{phase} loss is {loss:{5}.{2}} and {phase} accuracy is {running_correct}/{len(data_loader.dataset)}{accuracy:{10}.{4}}')
     return loss, accuracy
 
 # number of epochs to train the model
-n_epochs = 4
+n_epochs = 9
 # track change in loss
 val_epoch_loss_min = np.Inf
 train_losses, train_accuracy = [], []
@@ -153,10 +153,12 @@ plt.plot(range(1, len(train_losses)+1), train_losses, 'bo', label = 'training lo
 plt.plot(range(1, len(val_losses)+1), val_losses, 'r', label = 'validation loss')
 plt.legend()
 plt.savefig('train_validation_loss.png')
+plt.gcf().clear()
 
 plt.plot(range(1, len(train_accuracy)+1), train_accuracy, 'bo', label = 'train accuracy')
 plt.plot(range(1, len(val_accuracy)+1), val_accuracy, 'r', label = 'val accuracy')
 plt.legend()
 plt.savefig('train_validation_accuracy.png')
+plt.gcf().clear()
 
 print('Exit Code... ')
