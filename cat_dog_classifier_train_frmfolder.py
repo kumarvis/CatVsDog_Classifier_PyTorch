@@ -73,7 +73,7 @@ num_ftrs = model.fc.in_features
 model.fc = nn.Linear(num_ftrs, num_classes)
 
 # number of epochs to train the model
-n_epochs = 64
+n_epochs = 30
 epoch_save_strt = math.ceil(n_epochs * 0.1)
 valid_loss_min = np.Inf # track change in validation loss
 
@@ -85,7 +85,7 @@ optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 
 # move tensors to GPU if CUDA is available
 if is_gpu_available:
-    model = model.cuda()
+    model.cuda()
 
 print('Training Start...')
 for epoch in range(1, n_epochs+1):
