@@ -118,7 +118,7 @@ def fit(epoch, model, data_loader, phase='training', volatile=False):
     return loss, accuracy
 
 # number of epochs to train the model
-n_epochs = 9
+n_epochs = 6
 # track change in loss
 val_epoch_loss_min = np.Inf
 train_losses, train_accuracy = [], []
